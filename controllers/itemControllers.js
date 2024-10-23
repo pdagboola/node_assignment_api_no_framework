@@ -59,8 +59,8 @@ const findItemById = async (req, res) => {
   //   console.log("id:", id);
   const item = await itemById(id);
   if (!item) {
-    res.writeHead(404, { "Content-Type": "text/html" });
-    return res.end("Item not found");
+    res.writeHead(404, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ message: "Item not found" }));
   } else {
     res.writeHead(201, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: "Item found", item }));
@@ -73,8 +73,8 @@ const updateItemById = async (req, res) => {
   const id = newUrl[newUrl.length - 1];
   const item = await itemById(id);
   if (!item) {
-    res.writeHead(404, { "Content-Type": "text/html" });
-    return res.end("Item not found");
+    res.writeHead(404, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ message: "Item not found" }));
   }
 
   let body = "";
@@ -100,9 +100,15 @@ const updateItemById = async (req, res) => {
 const deleteItemById = async (req, res) => {
   const newUrl = req.url.split("/");
   const id = newUrl[newUrl.length - 1];
-  await deleteItem(id);
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end("item deleted");
+  const item = await itemById(id);
+  if (!item) {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Item does not exist" }));
+  } else {
+    await deleteItem(id);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "item deleted" }));
+  }
 };
 
 module.exports = {

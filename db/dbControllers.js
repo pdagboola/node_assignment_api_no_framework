@@ -55,7 +55,8 @@ const updateItem = (name, price, size, id) => {
 };
 
 const deleteItem = (id) => {
-  const filteredItems = items.filter((item) => item.id !== id);
+  const filteredItems = items.filter((item) => item.id !== Number(id));
+  console.log("new items array:", filteredItems);
   fs.writeFileSync(
     "./db/items.json",
     JSON.stringify(filteredItems),
