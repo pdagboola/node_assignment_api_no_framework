@@ -1,7 +1,7 @@
 const http = require("http");
 const items = require("./db/items.json");
-const fs = require("fs");
-const querystring = require("querystring");
+// const fs = require("fs");
+// const querystring = require("querystring");
 const {
   createItemGet,
   createItemPost,
@@ -64,4 +64,4 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(8080);
+server.listen(3000);
