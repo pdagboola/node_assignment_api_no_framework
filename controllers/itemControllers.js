@@ -13,7 +13,7 @@ const getItems = async (res, req) => {
     res.writeHead(200, { "Content-Type": "application/json" });
     const items = await allItems();
     console.log(items);
-    res.writeHead(200, { "Content-Type": "json/application" });
+    // res.writeHead(200, { "Content-Type": "json/application" });
     res.end(JSON.stringify({ items }));
   } catch (err) {
     throw err;
@@ -72,6 +72,7 @@ const updateItemById = async (req, res) => {
   const newUrl = req.url.split("/");
   const id = newUrl[newUrl.length - 1];
   const item = await itemById(id);
+
   if (!item) {
     res.writeHead(404, { "Content-Type": "application/json" });
     return res.end(JSON.stringify({ message: "Item not found" }));
@@ -85,15 +86,22 @@ const updateItemById = async (req, res) => {
 
   req.on("end", async () => {
     const { name, price, size } = JSON.parse(body);
-    const updatedItem = {
-      name: name || item.name,
-      price: price || item.price,
-      size: size || item.size,
-      id: id,
-    };
-    await updateItem({ ...updatedItem });
+    console.log("line 89", name, price, size);
+    // const updatedItem = {
+    //   name: name || item.name,
+    //   price: price || item.price,
+    //   size: size || item.size,
+    //   id: id,
+    // };
+    const updatedItem = await updateItem(
+      name || item.name,
+      price || item.price,
+      size || item.size,
+      Number(id)
+    );
+    // await deleteItem(id);
     res.writeHead(201, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Item created", updatedItem }));
+    res.end(JSON.stringify({ message: "Item updated", updatedItem }));
   });
 };
 

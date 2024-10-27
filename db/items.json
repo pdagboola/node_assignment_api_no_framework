@@ -1,4 +1,1 @@
-[
-  { "name": "mac", "price": "1000", "size": "Large", "id": 2 },
-  { "name": "iPad", "price": "2000", "size": "medium", "id": 5 }
-]
+[{"name":"ksu","price":"100","size":"small","id":1},{"name":"tea","price":"200","size":"small","id":3},{"name":"bread","price":"200","size":"small","id":2}]
